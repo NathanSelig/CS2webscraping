@@ -1,0 +1,14 @@
+2. add performance over month and 6 month and year
+    1. only for stocks becuase no ETF on data
+3. be able to see whole table or certian asset
+4. take in past price of stock at time
+
+
+
+
+
+
+
+
+
+
