@@ -1,5 +1,10 @@
 2. add performance over month and 6 month and year
-    1. only for stocks becuase no ETF on data
+    only for stocks becuase no ETF on data
+    take the stock url and go to the history page
+    take the date and add it to a db 
+    use regex find date of 1 month 6 month and 12 month
+    option to save a file
+
 3. be able to see whole table or certian asset
 4. take in past price of stock at time
 
