@@ -7,13 +7,14 @@ import datetime
 
 #region functions
 def stock_information(page, stock_name):
+
     user_soup = BeautifulSoup(page.content, 'html.parser') 
     #region price of stock
     stock_price  = user_soup.find('fin-streamer', class_ = 'Fw(b) Fz(36px) Mb(-4px) D(ib)')
     stock_info = user_soup.find('table', class_ = 'W(100%)')
     time_of_data = user_soup.find('div', id = 'quote-market-notice')
     
-    stock_history(stock_name)
+    #  stock_history(stock_name)
 
     print(stock_price['value'], '  ')
     print('')
@@ -30,10 +31,11 @@ def compare(input):
     starhill_variable = str(input).split()
     
 def stock_history(stock_name):
-    history_url = requests.get(f'https://finance.yahoo.com/quote/AMZN/history')
-    history_soup = BeautifulSoup(history_url.content, 'html.parser')
-    table = history_soup.find('table', class_ = 'W(100%) M(0)')
-    table_data = table.find('tbody').find_all('tr')
+    print(f'https://finance.yahoo.com/quote/{stock_name}/history')
+    print(requests.get(f'https://finance.yahoo.com/quote/{stock_name}/history'))
+    # history_soup = BeautifulSoup(history_page.content, 'html.parser')
+    #table = history_soup.find('table', class_ = 'W(100%) M(0)')
+    #table_data = table.find('tbody').find_all('tr')
     
 #endregion
 
