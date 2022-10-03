@@ -54,15 +54,26 @@ def load_data(stock_name):
     #first option pick any date
     match choice:
         case 'date':
-            user_date = input('which data would you like to look at: ')
-            result = []
+            user_date = input('which date would you like to look at: ')
+            
             for data in open(f'stockdata/{stock_name}.csv'):
                 pattern = rf'({user_date},.+)'
-                line = re.findall(pattern,data)
+                line = re.search(pattern,data)
                 if line:
-                    result.append(line)
+                    result = line.group()
                 
-            print(result)
+            result = str(result).split(',')
+            
+            date_DB = pd.DataFrame({
+                'date':result[0],
+                'open':result[1],
+                'high':result[2],
+                'low':result[3],
+                'close':result[4]
+            },index = [0])
+            
+            print(date_DB)
+            
         case '30,60,90':
             #take the file for loop each line
             result = []
