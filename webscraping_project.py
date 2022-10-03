@@ -68,13 +68,27 @@ def load_data(stock_name):
             result = []
             for i,data in enumerate(open(f'stockdata/{stock_name}.csv')):
                 if i == 30:
-                    result.append(data)
+                    result.append(data.split(','))
                 if i == 60:
-                    result.append(data)
+                    result.append(data.split(','))
                 if i == 90:
-                    result.append(data)
-            print(result)
-            #enumatare when index = 30,60,90 save line
+                    result.append(data.split(','))
+                
+            date,high,low,open_price,close = [],[],[],[],[]
+            for i in result:
+                date.append(i[0])
+                open_price.append(i[1])
+                high.append(i[2])
+                low.append(i[3])
+                close.append(i[4])
+            data_369 = pd.DataFrame({
+                'Date':date,
+                'High':high,
+                'Low':low,
+                'Open':open_price,
+                'Close':close
+            })
+            print(data_369)
         case 'specific month':
             pass
 
@@ -110,5 +124,6 @@ match choice:
         user_page = requests.get(f'https://finance.yahoo.com/quote/%5E{user_stock}?p=%5E{user_stock}')
         stock_information(user_page)
     case 'compare stocks':
+        #TODO compare
         user_stock = input(f'what {choice} would you like to compare: ').upper()
         compare(user_stock)
