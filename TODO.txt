@@ -1,13 +1,5 @@
-1. take stock data as panda DB 
-    1.for loop through stockdata folder
-    2.take each file and add it to list of DB
-2. add performance over month and 6 month and year
-    only for stocks becuase no ETF on data
-    take the stock url and go to the history page
-    take the date and add it to a db 
-    use regex find date of 1 month 6 month and 12 month
-3. be able to see whole table or certian asset
-4. take in past price of stock at time
+TODO
+tie everything back into the ranking on robin
 
 
 

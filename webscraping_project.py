@@ -6,6 +6,10 @@ import datetime
 import os
 
 
+#region opening message
+print('this program is used to not only see the value of stocks but also compare them to there popularity on Robinhood')
+#endregion
+
 #region functions
 def stock_information(page, stock_name):
 
@@ -23,11 +27,6 @@ def stock_information(page, stock_name):
     print(time_of_data.get_text())
     
     load_data(stock_name)
-    
-    
-    
-    
-    #endregion
 
 def getDB():
     file = 'commonstocks.csv'
@@ -40,18 +39,14 @@ def load_data(stock_name):
     directory = 'stockdata'
     stocks = []
     
-    #region load files
     for file_name in os.listdir(directory):
         file = os.path.join(directory, file_name)
         if file_name.strip('.csv') == stock_name:
             stocks.append(pd.read_csv(file))
         
     
-    #endregion
     
-    #region make prettier
     choice = input('what would you like to do: ')
-    #first option pick any date
     match choice:
         case 'date':
             user_date = input('which date would you like to look at: ')
@@ -73,8 +68,7 @@ def load_data(stock_name):
             },index = [0])
             
             print(date_DB)
-            
-        case '30,60,90':
+        case '369':
             #take the file for loop each line
             result = []
             for i,data in enumerate(open(f'stockdata/{stock_name}.csv')):
@@ -100,10 +94,39 @@ def load_data(stock_name):
                 'Close':close
             })
             print(data_369)
-        case 'specific month':
-            pass
-
-#endregion
+        case 'month':
+            #TODO 
+            #ask for month
+            month = input('what month would you like to look at: ')
+            #take all data from that month
+            result = []
+            for data in open(f'stockdata/{stock_name}.csv'):
+                pattern = rf'2.-{month}.+'
+                line = re.findall(pattern,data)
+                if line:
+                    result.append(str(line).split(','))
+                
+            
+            date,high,low,open_price,close = [],[],[],[],[]
+            for i in result:
+                date.append(i[0])
+                open_price.append(i[1])
+                high.append(i[2])
+                low.append(i[3])
+                close.append(i[4])
+            
+            
+            data_month = pd.DataFrame({
+                'Date':date,
+                'High':high,
+                'Low':low,
+                'Open':open_price,
+                'Close':close
+            })
+            
+            print(data_month)
+            
+            
 
 #* page format etfs https://finance.yahoo.com/quote/%5E[stock name]?p=%5E[stock name]
 #* page format stocks /quote/[stock name]
