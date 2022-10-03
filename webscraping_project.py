@@ -1,8 +1,9 @@
+import re
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import datetime
-
+import os
 
 
 #region functions
@@ -14,13 +15,18 @@ def stock_information(page, stock_name):
     stock_info = user_soup.find('table', class_ = 'W(100%)')
     time_of_data = user_soup.find('div', id = 'quote-market-notice')
     
-    #  stock_history(stock_name)
 
     print(stock_price['value'], '  ')
     print('')
-    print(stock_info.get_text())
-    print('')
+    #print(stock_info.get_text())
+    #print('')
     print(time_of_data.get_text())
+    
+    load_data(stock_name)
+    
+    
+    
+    
     #endregion
 
 def getDB():
@@ -30,13 +36,59 @@ def getDB():
 def compare(input):
     starhill_variable = str(input).split()
     
-def stock_history(stock_name):
-    print(f'https://finance.yahoo.com/quote/{stock_name}/history')
-    print(requests.get(f'https://finance.yahoo.com/quote/{stock_name}/history'))
-    # history_soup = BeautifulSoup(history_page.content, 'html.parser')
-    #table = history_soup.find('table', class_ = 'W(100%) M(0)')
-    #table_data = table.find('tbody').find_all('tr')
+def load_data(stock_name):
+    directory = 'stockdata'
+    stocks = []
     
+    #region load files
+    for file_name in os.listdir(directory):
+        file = os.path.join(directory, file_name)
+        if file_name.strip('.csv') == stock_name:
+            stocks.append(pd.read_csv(file))
+        
+    
+    #endregion
+    
+    #region make prettier
+    choice = input('what would you like to do: ')
+    #first option pick any date
+    match choice:
+        case 'date':
+            user_date = input('which data would you like to look at: ')
+            result = []
+            for data in open(f'stockdata/{stock_name}.csv'):
+                pattern = rf'({user_date},.+)'
+                line = re.findall(pattern,data)
+                if line:
+                    result.append(line)
+                
+            print(result)
+    #pick range from data to date
+        case 'range':
+            user_date = input('what range would you like: ').split(',')
+            result = []
+            in_range = False
+            for data in open(f'stockdata/{stock_name}.csv'):
+                pattern_start = rf'({user_date[0]},.+)'
+                pattern_end = rf'({user_date[1]},.+)'
+                
+                if not in_range:
+                    line = re.findall(pattern_start,data)
+                else:
+                    result.append(data)
+                    line = re.findall(pattern_end, data)
+                if line:
+                    in_range = not in_range
+                    result.append(line)
+            print(result)
+    #pick 1,6,12 month data
+        case '1,6,12':
+            pass
+        case 'closed price':
+            pass
+        case 'specific month':
+            pass
+
 #endregion
 
 #* page format etfs https://finance.yahoo.com/quote/%5E[stock name]?p=%5E[stock name]
