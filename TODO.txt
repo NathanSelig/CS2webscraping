@@ -1,5 +1,11 @@
 TODO
+compare function
+compare the current and robin hood ranking of each 
+    get current price
+    get robin hood ranking 
+    add to DB
 tie everything back into the ranking on robin
+
 
 
 
