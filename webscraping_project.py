@@ -63,29 +63,18 @@ def load_data(stock_name):
                     result.append(line)
                 
             print(result)
-    #pick range from data to date
-        case 'range':
-            user_date = input('what range would you like: ').split(',')
+        case '30,60,90':
+            #take the file for loop each line
             result = []
-            in_range = False
-            for data in open(f'stockdata/{stock_name}.csv'):
-                pattern_start = rf'({user_date[0]},.+)'
-                pattern_end = rf'({user_date[1]},.+)'
-                
-                if not in_range:
-                    line = re.findall(pattern_start,data)
-                else:
+            for i,data in enumerate(open(f'stockdata/{stock_name}.csv')):
+                if i == 30:
                     result.append(data)
-                    line = re.findall(pattern_end, data)
-                if line:
-                    in_range = not in_range
-                    result.append(line)
+                if i == 60:
+                    result.append(data)
+                if i == 90:
+                    result.append(data)
             print(result)
-    #pick 1,6,12 month data
-        case '1,6,12':
-            pass
-        case 'closed price':
-            pass
+            #enumatare when index = 30,60,90 save line
         case 'specific month':
             pass
 
