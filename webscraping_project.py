@@ -109,10 +109,7 @@ def load_data(stock_name):
             })
             print(data_369)
         case 'month':
-            #TODO 
-            #ask for month
             month = input('what month would you like to look at: ')
-            #take all data from that month
             result = []
             for data in open(f'stockdata/{stock_name}.csv'):
                 pattern = rf'2.-{month}.+'
